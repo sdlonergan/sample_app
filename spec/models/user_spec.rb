@@ -33,6 +33,17 @@ describe User do
     its(:remember_token) { should_not be_blank }
   end
 
+  describe "accessible attributes" do 
+    it "should not allow access to admin" do 
+      expect do 
+        User.new(name: "Example User", 
+                 email: "user@example.com", 
+                 password: "foobar", 
+                 password_confirmation: "foobar", 
+                 admin: true)
+      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end
+  end
   describe "when name is not present" do 
     before { @user.name = " " }
     it { should_not be_valid }
