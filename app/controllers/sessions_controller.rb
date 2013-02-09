@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  before_filter :create_new_user, only: [:new, :create]   
+
   def new 
   end
 
@@ -19,4 +21,10 @@ class SessionsController < ApplicationController
     redirect_to root_url
   end
 
+  private 
+    def create_new_user
+      if signed_in?
+        redirect_to root_path, notice: "No Need to be here!"
+      end
+    end
 end
